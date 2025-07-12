@@ -1,7 +1,5 @@
-export default async function Admin() {
-  return (
-    <>
-      <h1>Admin</h1>
-    </>
-  );
+import { redirect } from 'next/navigation';
+
+export default function AdminPage() {
+  redirect('/admin/user?page=1');
 }

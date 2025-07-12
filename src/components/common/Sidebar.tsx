@@ -132,6 +132,25 @@ export default function Sidebar() {
               </div>
               <p className="pl-10">멍초보가이드</p>
             </Link>
+
+            {/* 관리자 */}
+            <Link
+              href={'/admin'}
+              className={`sidebar__content group relative ${pathname.startsWith('/admin') && 'sidebar__content-active'}`}
+            >
+              <div
+                className={`absolute ${pathname === '/admin' && 'opacity-0'}`}
+              >
+                <Icon width="24px" height="26px" left="-342px" top="-20px" />
+              </div>
+
+              <div
+                className={`absolute opacity-0 ${pathname.startsWith('/admin') && 'opacity-100'} `}
+              >
+                <Icon width="24px" height="26px" left="-382px" top="-20px" />
+              </div>
+              <p className="pl-10">관리자페이지</p>
+            </Link>
           </div>
           <div className="text-sm font-medium sm:text-[16px]">
             <div className="flex h-[52px] w-[220px] cursor-pointer items-center gap-3 py-3 pl-6">
