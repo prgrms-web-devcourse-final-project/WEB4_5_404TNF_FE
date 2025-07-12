@@ -3,7 +3,7 @@ import Icon from '@/components/common/Icon';
 export default async function Terms() {
   return (
     <>
-      <div className="scrollbar-hidden flex h-full w-screen max-w-[1548px] min-w-[375px] flex-col justify-between overflow-y-auto bg-[var(--color-background)] py-[4.24vh] sm:w-[calc(100vw-276px)] sm:py-0">
+      <div className="scrollbar-hidden flex h-full w-screen min-w-[375px] flex-col justify-between overflow-y-auto bg-[var(--color-background)] py-[4.24vh] sm:w-full sm:py-0">
         <div>
           <p className="mt-4 text-center text-[16px] font-bold sm:mt-8 sm:text-[28px]">
             이용약관 동의

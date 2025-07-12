@@ -22,7 +22,7 @@ export default function ProfileClient() {
   } else {
     return (
       <main
-        className="scrollbar-hidden relative h-screen w-screen overflow-y-scroll bg-[var(--color-background)] p-6 sm:h-[calc(100vh-156px)] sm:w-full sm:px-30 sm:py-17"
+        className="relative p-6 sm:h-[calc(100vh-156px)] sm:w-full sm:px-30 sm:py-17"
         id="profile-container"
       >
         <h1 className="mb-15 hidden text-center text-[32px] sm:block">

@@ -5,7 +5,7 @@ import RoadmapPoint from './RoadmapPoint';
 
 export default function Roadmap() {
   return (
-    <div className="absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-2/5 justify-center sm:-translate-y-1/3">
+    <div className="absolute top-[55%] left-1/2 flex w-full -translate-x-1/2 -translate-y-2/5 justify-center sm:top-1/2 sm:-translate-y-1/3">
       <div className="relative select-none">
         <Image
           className="block sm:hidden"

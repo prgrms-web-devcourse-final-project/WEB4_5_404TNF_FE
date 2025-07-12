@@ -23,9 +23,9 @@ export default function RootLayout({
             </div>
 
             {/* 56 , 39 */}
-            <div className="h-full bg-amber-200 sm:mt-[5.2vh] sm:mr-[3vw] sm:mb-0 sm:h-[calc(89.4vh)] sm:grow-1 sm:pl-[2vw]">
+            <div className="h-full sm:mt-[5.2vh] sm:mr-[3vw] sm:mb-0 sm:h-[calc(89.4vh)] sm:grow-1 sm:pl-[2vw]">
               <Header />
-              <div className="scrollbar-hidden h-[calc(100vh-72px)] w-full overflow-y-auto bg-amber-500 sm:h-[calc(86.8vh-36px)]">
+              <div className="scrollbar-hidden h-[calc(100vh-72px)] w-full overflow-y-auto bg-[var(--color-background)] sm:h-[calc(86.8vh-36px)] sm:rounded-[50px]">
                 {children}
               </div>
             </div>

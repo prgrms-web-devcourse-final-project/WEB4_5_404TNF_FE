@@ -79,7 +79,7 @@ export default function LoginForm() {
           </p>
         </div>
 
-        <div className="mt-16 flex items-center">
+        <div className="mt-[3.5vh] flex items-center">
           <div className="h-px flex-1 bg-[#2B2926]" />
           <span className="px-4 text-[14px] font-medium text-[#2B2926] sm:px-10 sm:text-[18px]">
             또는

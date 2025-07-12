@@ -19,7 +19,7 @@ export default function Icon({
     <div
       style={{ width, height, backgroundPosition: `${left} ${top}` }}
       className={twMerge(
-        "bg-[url('../../assets/images/sprite.png')] bg-no-repeat",
+        "bg-[url('/images/sprite.svg')] bg-no-repeat",
         className,
       )}
       onClick={onClick}

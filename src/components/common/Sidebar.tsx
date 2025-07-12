@@ -10,7 +10,7 @@ export default function Sidebar() {
   const pathname = usePathname();
   return (
     <>
-      <div className="fixed z-200 flex h-full w-60 flex-col items-center overflow-x-hidden overflow-y-auto bg-[var(--color-primary-100)] p-8 text-[#2B2926] sm:relative sm:my-[5.2vh] sm:ml-14 sm:h-[calc(89.4vh)] sm:w-[220px] sm:rounded-[50px] sm:bg-[#FFFDF7]">
+      <div className="fixed z-200 hidden h-full w-60 flex-col items-center overflow-x-hidden overflow-y-auto bg-[var(--color-primary-100)] p-8 text-[#2B2926] sm:relative sm:my-[5.2vh] sm:ml-14 sm:flex sm:h-[calc(89.4vh)] sm:w-[220px] sm:rounded-[50px] sm:bg-[#FFFDF7]">
         {/* <div className="relative h-[13.2vh] w-[8.17vw]">
           <Image
             className="hidden object-contain sm:block"

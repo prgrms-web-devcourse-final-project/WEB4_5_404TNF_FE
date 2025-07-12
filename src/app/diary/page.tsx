@@ -13,7 +13,7 @@ export default function Diary() {
   ];
 
   return (
-    <main className="flex w-screen flex-col items-center bg-[var(--color-background)] p-6 sm:block sm:h-200 sm:w-full sm:p-0 sm:px-12 sm:py-7">
+    <main className="flex h-full flex-col items-center p-6 sm:block sm:p-0 sm:px-12 sm:py-7">
       <div className="mb-3 flex w-full justify-between">
         <div className="flex w-full justify-between gap-6 sm:justify-start sm:pl-3">
           <div className="flex w-[137px] items-center justify-between rounded-xl border-1 border-[var(--color-primary-500)] px-4 sm:w-[160px]">

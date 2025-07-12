@@ -24,9 +24,9 @@ export default function DiaryCreate() {
   ];
 
   return (
-    <main className="flex w-screen flex-col bg-[var(--color-background)] pt-6 pb-5 text-sm sm:m-0 sm:block sm:w-full sm:pt-9 sm:pb-0">
-      <MobileTitle title="멍멍일지" />
-      <div className="relative flex w-full flex-col gap-6 px-4 sm:h-200 sm:px-19">
+    <main className="flex h-full flex-col pt-6 pb-5 text-sm sm:m-0 sm:block sm:pt-9 sm:pb-0">
+      <MobileTitle title="멍멍일지" closePage={() => {}} onClick={() => {}} />
+      <div className="relative flex w-full flex-col gap-6 px-4 sm:px-19">
         <div className="flex w-full justify-between gap-6 sm:hidden sm:justify-start sm:pl-3">
           <div className="flex grow-2 items-center justify-center rounded-xl border-1 border-[var(--color-primary-500)] px-4 py-[11px] leading-[1.2] sm:w-[160px]">
             2025. 7. 3
@@ -68,9 +68,6 @@ export default function DiaryCreate() {
           댕댕일지 삭제하기
         </span>
         <div className="h-15" />
-        <button className="fixed right-0 bottom-0 left-0 bg-[var(--color-primary-300)] py-5">
-          저장하기
-        </button>
       </div>
     </main>
   );

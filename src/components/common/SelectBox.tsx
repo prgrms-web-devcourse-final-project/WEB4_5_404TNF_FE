@@ -100,6 +100,7 @@ export default function SelectBox({
             fontWeight: '500',
             cursor: 'pointer',
             background: 'none',
+            minHeight: fontSize === '14px' ? '20px' : '0',
             paddingBlock: hasBorder ? '8px' : '',
             paddingInline: hasBorder ? '1em' : '',
             '&:hover': {
