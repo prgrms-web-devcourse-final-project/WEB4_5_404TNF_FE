@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function LandingIntro() {
   return (
     <>
-      <section className="h-auto w-full bg-[#ffd091] px-20 py-20">
+      <section className="h-auto w-full bg-[#ffd091] px-20 pt-20">
         <div className="flex flex-col gap-9 pt-14 pb-[158px]">
           <h2 className="text-center text-5xl font-bold">
             매일의 기록이 모여,
