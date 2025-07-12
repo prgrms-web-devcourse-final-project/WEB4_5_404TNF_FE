@@ -91,7 +91,7 @@ const AnimatedText = () => {
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={controls}
-      className="pb-24 text-center"
+      className="pb-24 text-center text-lg"
     >
       하루하루의 기록이 모이면
       <br />내 강아지를 위한 맞춤 조언이 시작됩니다
