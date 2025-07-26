@@ -23,9 +23,10 @@ export default function FeedInput({
   };
 
   const handleAddRow = () => {
+    const lastUnit = feedingList[feedingList.length - 1]?.unit || 'GRAM';
     setFeedingList([
       ...feedingList,
-      { hour: '', minute: '', amount: '', unit: 'GRAM' },
+      { hour: '', minute: '', amount: '', unit: lastUnit },
     ]);
   };
 

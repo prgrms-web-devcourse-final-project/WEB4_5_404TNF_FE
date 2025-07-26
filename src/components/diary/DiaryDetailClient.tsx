@@ -7,6 +7,7 @@ import Calendar from './Calendar';
 import DiaryCard from './DiaryCard';
 import DiaryProfile from './DiaryProfile';
 import DiaryOptionsMenu from './DiaryOptionsMenu';
+import symbol from '@/assets/images/alternative-image.svg';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { useGetDiaryDetail } from '@/lib/hooks/diary/api/useGetDiaryDetail';
@@ -21,11 +22,25 @@ const feedUnitOptions = [
   { label: '컵', value: 'CUP' },
 ];
 
+const paceOptions = [
+  { value: '1', label: '가볍게' },
+  { value: '2', label: '적당히' },
+  { value: '3', label: '힘차게' },
+];
+
 const formatTime = (datetime: string) => {
   const date = new Date(datetime);
   const hour = date.getHours().toString().padStart(1, '0');
   const minute = date.getMinutes().toString().padStart(2, '0');
   return `${hour}시 ${minute}분`;
+};
+
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  const yyyy = date.getFullYear();
+  const mm = (date.getMonth() + 1).toString().padStart(2, '0');
+  const dd = date.getDate().toString().padStart(2, '0');
+  return `${yyyy}. ${mm}. ${dd}`;
 };
 
 export default function DiaryDetailClient({ logId }: { logId: number }) {
@@ -106,7 +121,26 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
         </span>
       </div>
     );
-  if (error || !data) return <p>데이터를 불러올 수 없습니다.</p>;
+  if (error || !data) {
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center gap-2 py-64 sm:gap-3 sm:py-0">
+        <Image
+          src={symbol}
+          alt="작성된 멍멍일지가 없습니다"
+          className="ml-[-8px] h-auto w-16 sm:w-24"
+        />
+        <p className="w-full text-center text-sm text-[var(--color-grey)] sm:text-base">
+          존재하지 않는 멍멍일지 입니다
+        </p>
+        <button
+          className="mt-5 cursor-pointer rounded-full bg-[var(--color-pink-300)] px-8 py-3 hover:bg-[var(--color-pink-500)]"
+          onClick={() => router.back()}
+        >
+          돌아가기
+        </button>
+      </div>
+    );
+  }
 
   const { recordAt, weight, sleepTime, content, feedingList, walkingList } =
     data;
@@ -128,7 +162,7 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
         {/* mobile */}
         <div className="flex w-full justify-between gap-6 sm:hidden sm:justify-start sm:pl-3">
           <div className="flex h-[38px] flex-1 items-center justify-center rounded-xl border-1 border-[var(--color-primary-500)] px-4 leading-[1.2] sm:w-[160px]">
-            {data.recordAt}
+            {formatDate(data.recordAt)}
           </div>
           <div className="flex h-[38px] flex-1 items-center justify-center rounded-xl border-1 border-[var(--color-primary-500)] px-4 leading-[1.2] sm:w-[160px]">
             {pet?.name}
@@ -165,6 +199,7 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
               breedLabel={getBreedLabel(pet?.breed)}
               sizeLabel={getSizeLabel(pet?.size)}
               formatAge={formatAge}
+              imageUrl={pet?.imgUrl ?? null}
             />
             <DiaryCard className="w-full sm:h-[205px]" title="오늘의 건강기록">
               <div className="mb-4 text-sm sm:mt-2 sm:mb-6 sm:text-base">
@@ -182,8 +217,8 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
             </DiaryCard>
           </div>
           <div className="flex grow flex-col gap-6 sm:gap-12">
-            <div className="flex w-full flex-col justify-between gap-6 sm:flex-row sm:gap-14">
-              <DiaryCard className="min-h-50 grow sm:h-71" title="식사량">
+            <div className="flex w-full flex-col justify-between gap-6 sm:flex-row sm:gap-4">
+              <DiaryCard className="min-h-50 sm:h-71 sm:flex-1" title="식사량">
                 <ul className="-mt-3 px-2">
                   {(feedingList as Feeding[]).map((item, idx) => {
                     const unitLabel =
@@ -206,7 +241,7 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
                   })}
                 </ul>
               </DiaryCard>
-              <DiaryCard className="min-h-50 grow sm:h-71" title="산책">
+              <DiaryCard className="min-h-50 sm:h-71 sm:flex-1" title="산책">
                 <ul className="-mt-3 px-2">
                   {(walkingList as Walking[]).map((item, idx) => {
                     const start = formatTime(item.startTime);
@@ -216,9 +251,18 @@ export default function DiaryDetailClient({ logId }: { logId: number }) {
                         key={idx}
                         className="border-b border-[var(--color-primary-300)] py-[9px]"
                       >
-                        <span>
-                          {start} ~ {end}
-                        </span>
+                        <div className="inline-flex gap-2">
+                          <span>
+                            {start} ~ {end}
+                          </span>
+                          <span>
+                            {'( 강도: '}
+                            {paceOptions.find(
+                              (opt) => opt.value === String(item.pace),
+                            )?.label ?? `${item.pace}`}
+                            {' )'}
+                          </span>
+                        </div>
                       </li>
                     );
                   })}

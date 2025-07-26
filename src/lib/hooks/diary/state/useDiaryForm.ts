@@ -43,12 +43,26 @@ export function useDiaryForm(initPetId?: string, initRecordAt?: string) {
   const recordAt = selected ? format(selected, 'yyyy-MM-dd') : '';
   const numericPetId = Number(selectedPetId);
 
-  const { data: diaryData } = useCheckDiary(
+  // check diary
+  const { data: checkResult } = useCheckDiary(
     numericPetId,
     recordAt,
     !!(numericPetId && recordAt),
   );
-  const hasDiary = !!diaryData;
+
+  console.log('check result: ', checkResult);
+
+  const hasDiary = checkResult?.mode === 'edit';
+  const diaryData = hasDiary
+    ? (checkResult.data as DiaryCheckResponse)
+    : undefined;
+
+  useEffect(() => {
+    if (checkResult?.mode === 'create') {
+      const unit = checkResult.data.unit;
+      if (unit) setSelectedUnit(unit);
+    }
+  }, [checkResult, setSelectedUnit]);
 
   // get selected pet info
   const selectedPet = useMemo(
@@ -77,6 +91,8 @@ export function useDiaryForm(initPetId?: string, initRecordAt?: string) {
     setSleepTime,
     setFeedingList,
     setWalkingList,
+    selectedUnit,
+    setSelectedUnit,
   });
 
   const { handleSubmit } = useDiarySubmit({
@@ -118,5 +134,6 @@ export function useDiaryForm(initPetId?: string, initRecordAt?: string) {
     formatAge,
     handleSubmit,
     isSubmitting,
+    selectedPet,
   };
 }

@@ -55,6 +55,7 @@ export default function DiaryWrite() {
     walkingList,
     setWalkingList,
     isSubmitting,
+    selectedPet,
   } = useDiaryForm(petId, recordAt);
 
   const petOptions = pets.map((pet) => ({
@@ -151,6 +152,7 @@ export default function DiaryWrite() {
               breedLabel={breedLabel}
               sizeLabel={sizeLabel}
               formatAge={formatAge}
+              imageUrl={selectedPet?.imgUrl ?? null}
             />
             <DiaryCard className="w-full sm:h-[205px]" title="오늘의 건강기록">
               <SingleInput

@@ -22,7 +22,7 @@ export default function FeedInputItem({
         <input
           className="input-style mr-1 w-11 py-1 text-center leading-[1.2] focus:outline-[var(--color-primary-500)]"
           type="text"
-          placeholder="시간"
+          placeholder="시"
           maxLength={2}
           value={hour}
           onChange={(e) => onChange('hour', e.target.value)}

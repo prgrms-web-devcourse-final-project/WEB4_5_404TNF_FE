@@ -8,6 +8,8 @@ type Props = {
   setSleepTime: (sleepTime: string) => void;
   setFeedingList: (list: FeedEntry[]) => void;
   setWalkingList: (list: WalkEntry[]) => void;
+  setSelectedUnit: (unit: string) => void;
+  selectedUnit: string;
 };
 
 export function useInitDiaryForm({
@@ -18,8 +20,10 @@ export function useInitDiaryForm({
   setSleepTime,
   setFeedingList,
   setWalkingList,
+  selectedUnit,
 }: Props) {
   useEffect(() => {
+    console.log('diaryData', diaryData);
     if (hasDiary && diaryData) {
       setNote(diaryData.content || '');
       setWeight(diaryData.weight?.toString() || '');
@@ -54,7 +58,9 @@ export function useInitDiaryForm({
       setNote('');
       setWeight('');
       setSleepTime('');
-      setFeedingList([{ hour: '', minute: '', amount: '', unit: 'GRAM' }]);
+      setFeedingList([
+        { hour: '', minute: '', amount: '', unit: selectedUnit || 'GRAM' },
+      ]);
       setWalkingList([
         {
           startHour: '',
@@ -73,5 +79,6 @@ export function useInitDiaryForm({
     setSleepTime,
     setFeedingList,
     setWalkingList,
+    selectedUnit,
   ]);
 }

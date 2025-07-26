@@ -28,7 +28,7 @@ export default function WalkingInputItem({
         <input
           className="input-style mr-0 w-11 py-1 text-center leading-[1.2] focus:outline-[var(--color-primary-500)] sm:mr-1"
           type="text"
-          placeholder="시간"
+          placeholder="시"
           maxLength={2}
           value={startHour}
           onChange={(e) => onChange('startHour', e.target.value)}
@@ -53,7 +53,7 @@ export default function WalkingInputItem({
         <input
           className="input-style mr-0 w-11 py-1 text-center leading-[1.2] focus:outline-[var(--color-primary-500)] sm:mr-1"
           type="text"
-          placeholder="시간"
+          placeholder="시"
           maxLength={2}
           value={endHour}
           onChange={(e) => onChange('endHour', e.target.value)}

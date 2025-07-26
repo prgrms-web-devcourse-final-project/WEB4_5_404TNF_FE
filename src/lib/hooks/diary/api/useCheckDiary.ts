@@ -6,7 +6,7 @@ export const useCheckDiary = (
   date: string,
   enabled: boolean,
 ) => {
-  return useQuery<DiaryCheckResponse>({
+  return useQuery<DiaryCheckResult>({
     queryKey: ['diary', petId, date],
     queryFn: () => checkDiary(petId, date),
     enabled,

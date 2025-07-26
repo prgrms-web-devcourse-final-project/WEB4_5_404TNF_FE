@@ -48,6 +48,16 @@ type DiaryCheckResponse = {
   }[];
 };
 
+type DiaryCheckCreateResult = {
+  result: string;
+  unit: string;
+};
+
+type DiaryCheckResult =
+  | { mode: 'edit'; data: DiaryCheckResponse }
+  | { mode: 'create'; data: DiaryCheckCreateResult }
+  | null;
+
 // diary detail
 type Feeding = {
   amount: number;

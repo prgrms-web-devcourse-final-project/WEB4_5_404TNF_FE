@@ -1,33 +1,43 @@
 // feeding list
 export function validateFeedingList(feedingList: FeedEntry[]): string | null {
+  let firstUnit: string | null = null;
+
   for (const entry of feedingList) {
-    const { hour, minute, amount } = entry;
+    const { hour, minute, amount, unit } = entry;
     const hasEntry =
       hour.trim() !== '' || minute.trim() !== '' || amount.trim() !== '';
 
-    // incomplete entry
-    const isIncomplete =
-      hasEntry &&
-      (hour.trim() === '' || minute.trim() === '' || amount.trim() === '');
-
-    if (isIncomplete) {
-      return '식사 기록의 모든 입력칸을 채워주세요';
+    // unit consistency
+    if (hasEntry) {
+      if (firstUnit === null) {
+        firstUnit = unit;
+      } else if (unit !== firstUnit) {
+        return '식사량 단위를 통일해주세요';
+      }
     }
 
-    if (hasEntry) {
-      const hourNum = Number(hour);
-      const minuteNum = Number(minute);
+    // time
+    if (!hour.trim() && (minute.trim() || amount.trim())) {
+      return '식사량 기록의 "시" 항목을 입력해주세요';
+    }
 
-      // time
+    if (hour.trim()) {
+      const hourNum = Number(hour);
+      const minuteNum = Number(minute || '0');
+
       if (
         isNaN(hourNum) ||
         hourNum < 0 ||
-        hourNum > 24 ||
+        hourNum > 23 ||
         isNaN(minuteNum) ||
         minuteNum < 0 ||
         minuteNum > 59
       ) {
-        return '시간은 24시 / 59분 이하의 숫자로 입력해주세요';
+        return '시간은 0~23시 / 0~59분 이하의 숫자로 입력해주세요';
+      }
+
+      if (hour.trim() && amount.trim() === '') {
+        return '식사량 기록의 급여량 항목을 입력해주세요';
       }
     }
   }
@@ -45,48 +55,60 @@ export function validateWalkingList(walkingList: WalkEntry[]): string | null {
       endHour.trim() !== '' ||
       endMinute.trim() !== '';
 
-    // incomplete entry
-    const isIncomplete =
-      hasEntry &&
-      (startHour.trim() === '' ||
-        startMinute.trim() === '' ||
-        endHour.trim() === '' ||
-        endMinute.trim() === '');
-
-    if (isIncomplete) {
-      return '산책 기록의 모든 입력칸을 채워주세요';
-    }
-
     if (hasEntry) {
-      const startH = Number(startHour);
-      const startM = Number(startMinute);
-      const endH = Number(endHour);
-      const endM = Number(endMinute);
+      // hour X
+      const withoutStartHour = !startHour.trim();
+      const withoutEndHour = !endHour.trim();
+      if (withoutStartHour || withoutEndHour) {
+        return '산책 시작/종료 시간의 "시" 항목을 입력해주세요';
+      }
 
-      // time
+      // hour X, minute O
+      const invalidStart = !startHour.trim() && startMinute.trim();
+      const invalidEnd = !endHour.trim() && endMinute.trim();
+      if (invalidStart || invalidEnd) {
+        return '산책 시작/종료 시간의 "시" 항목을 입력해주세요';
+      }
+
+      // hour O, minute X -> minute = '00'
+      const startH = Number(startHour);
+      const startM = Number(startMinute || '0');
+      const endH = Number(endHour);
+      const endM = Number(endMinute || '0');
+
       if (
         isNaN(startH) ||
         startH < 0 ||
-        startH > 24 ||
+        startH > 23 ||
         isNaN(startM) ||
         startM < 0 ||
         startM > 59 ||
         isNaN(endH) ||
         endH < 0 ||
-        endH > 24 ||
+        endH > 23 ||
         isNaN(endM) ||
         endM < 0 ||
         endM > 59
       ) {
-        return '시간은 24시 / 59분 이하의 숫자로 입력해주세요';
+        return '시간은 0~23시 / 0~59분 이하의 숫자로 입력해주세요';
       }
 
-      // start time >= end time
+      // walking duration
       const startTotal = startH * 60 + startM;
       const endTotal = endH * 60 + endM;
 
-      if (startTotal >= endTotal) {
-        return '종료 시간은 시작 시간 이후로 입력해주세요';
+      if (startTotal === endTotal) {
+        return '산책 시간은 최소 1분 이상이어야 합니다';
+      }
+
+      let duration = endTotal - startTotal;
+      // end time < start time
+      if (duration < 0) {
+        duration += 1440; // 1440 minutes / day
+      }
+
+      if (duration > 720) {
+        return '산책 시간은 최대 12시간 이내여야 합니다';
       }
     }
   }

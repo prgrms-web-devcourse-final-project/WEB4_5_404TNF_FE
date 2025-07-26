@@ -11,19 +11,6 @@ type PetPayload = {
   userId?: string;
 };
 
-type PetFormValues = {
-  registNumber?: string | null;
-  birthday: string;
-  metday: string;
-  name: string;
-  breed: PetBreed;
-  size: PetSize;
-  weight?: string | null;
-  sex: 'true' | 'false';
-  isNeutered: 'true' | 'false';
-  image: File | null;
-};
-
 type PetProfile = {
   petId: number;
   registNumber: string;
@@ -38,6 +25,19 @@ type PetProfile = {
   birthday?: string;
   weight?: number;
   days?: number;
+};
+
+type PetFormValues = {
+  registNumber?: string | null;
+  birthday: string;
+  metday: string;
+  name: string;
+  breed: PetBreed;
+  size: PetSize;
+  weight?: string | null;
+  sex: 'true' | 'false';
+  isNeutered: 'true' | 'false';
+  image: File | null;
 };
 
 type PetBreed =
