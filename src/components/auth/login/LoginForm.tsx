@@ -1,17 +1,19 @@
 'use client';
 
-import { getUserProfile, login } from '@/api/auth';
+import { getUserProfile, login, socialLogin } from '@/api/auth';
 import Icon from '@/components/common/Icon';
 import { useAuthStore } from '@/stores/authStoe';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import PasswordToggleButton from '../ShowPasswordButton';
 
 export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const setLogin = useAuthStore((state) => state.setLogin);
 
@@ -20,12 +22,18 @@ export default function LoginForm() {
       login(email, password),
   });
 
+  const socialLoginMutation = useMutation({
+    mutationFn: socialLogin,
+  });
+
   const profileMutation = useMutation({
     mutationFn: getUserProfile,
   });
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (loginMutation.isPending || profileMutation.isPending) return;
 
     if (!email) {
       setError('이메일을 입력해주세요');
@@ -63,6 +71,18 @@ export default function LoginForm() {
     }
   };
 
+  const handleSocialLogin = async (provider: string) => {
+    if (socialLoginMutation.isPending) return;
+
+    try {
+      const res = await socialLoginMutation.mutateAsync(provider);
+      console.log(res);
+      window.location.href = res;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     type: 'email' | 'password',
@@ -81,7 +101,7 @@ export default function LoginForm() {
     <>
       <form
         onSubmit={handleLogin}
-        className="mt-12 flex flex-col justify-center gap-5 p-6 sm:mt-14 sm:px-[20vw]"
+        className="mt-12 flex flex-col justify-center gap-5 p-6 sm:mt-14 sm:px-[25vw]"
       >
         <input
           name="email"
@@ -92,19 +112,25 @@ export default function LoginForm() {
           onChange={(e) => handleChange(e, 'email')}
         />
 
-        <div>
+        <div className="relative">
           <input
             name="password"
-            type="password"
+            type={isShowPassword ? 'text' : 'password'}
             placeholder="비밀번호를 입력해주세요"
             className="auth__input focus:!border-[#FCC389]"
             value={password}
             onChange={(e) => handleChange(e, 'password')}
           />
+          {password.length > 0 && (
+            <PasswordToggleButton
+              isVisible={isShowPassword}
+              onClick={() => setIsShowPassword((prev) => !prev)}
+            />
+          )}
           {error && <p className="auth__error">{error}</p>}
         </div>
 
-        <button className="mt-4 h-[40px] cursor-pointer rounded-[12px] bg-[#FFDBAB] py-[10px] sm:mt-6 sm:h-[56px]">
+        <button className="mt-4 h-[40px] cursor-pointer rounded-[12px] bg-[#FFDBAB] py-[10px] hover:bg-[var(--color-primary-300)] sm:mt-6 sm:h-[56px]">
           <div className="flex items-center justify-center gap-2">
             <Icon width="20px" height="18px" left="-297px" top="-312px" />
             <p className="text-[14px] font-medium text-[#2B2926] sm:text-[18px]">
@@ -138,6 +164,7 @@ export default function LoginForm() {
             left="-16px"
             top="-361px"
             className="scale-54 cursor-pointer sm:scale-100"
+            onClick={() => handleSocialLogin('kakao')}
           />
           <Icon
             width="54px"
@@ -145,6 +172,7 @@ export default function LoginForm() {
             left="-94px"
             top="-361px"
             className="scale-60 cursor-pointer sm:scale-100"
+            onClick={() => handleSocialLogin('google')}
           />
         </div>
       </form>
