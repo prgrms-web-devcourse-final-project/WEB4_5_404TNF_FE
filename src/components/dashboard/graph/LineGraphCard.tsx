@@ -20,7 +20,7 @@ export default function LineGraphCard({
   dataset,
 }: {
   title: string;
-  dataset?: { date: string; weight?: number; sleep?: number }[];
+  dataset: { date: string; weight?: number; sleep?: number }[];
 }) {
   const router = useRouter();
 
@@ -122,14 +122,23 @@ export default function LineGraphCard({
             {title}
           </h2>
           <div className="h-[100px]" ref={containerRef}>
-            {dataset?.length ? (
-              <svg
-                ref={svgRef}
-                width="100%"
-                height="100%"
-                viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
-                preserveAspectRatio="none"
-              />
+            {dataset && dataset.length ? (
+              dataset.length === 1 ? (
+                <div className="flex h-full items-center justify-center">
+                  <span className="text-[var(--color-grey)]">
+                    데이터가 충분하지 않아 그래프를 표시할 수 없습니다
+                  </span>
+                </div>
+              ) : (
+                <svg
+                  className="mt-12"
+                  ref={svgRef}
+                  width="100%"
+                  height="100%"
+                  viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+                  preserveAspectRatio="none"
+                />
+              )
             ) : (
               <div className="flex w-full flex-col items-center gap-3">
                 <span className="text-center">

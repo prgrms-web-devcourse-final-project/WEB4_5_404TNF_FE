@@ -29,5 +29,6 @@ type DashboardWalking = {
 
 type DashboardChecklist = {
   name: string;
+  scheduleId: number;
   isDone: boolean;
 }[];

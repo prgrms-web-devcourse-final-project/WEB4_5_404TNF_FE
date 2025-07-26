@@ -11,3 +11,9 @@ export const calculateMetDay = (date: string) => {
 
   return Math.floor(diff / (1000 * 60 * 60 * 24));
 };
+
+export const formatMinutes = (minutes: number) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  return `${hours}시간 ${mins}분`;
+};
